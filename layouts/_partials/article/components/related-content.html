@@ -1,0 +1,38 @@
+{{ $related := (.Site.RegularPages.Related .) | first 5 }}
+{{ with $related }}
+<aside>
+    <h2 class="section-title">{{ T "article.relatedContent" }}</h2>
+    <div class="subsection-list-wrapper">
+        <button class="subsection-scroll-btn subsection-scroll-btn--prev" aria-label="前へ"><span>&#8249;</span></button>
+        <div class="subsection-list">
+            <div class="article-list--tile">
+                {{ range . }}
+                    {{ partial "article-list/tile" . }}
+                {{ end }}
+            </div>
+        </div>
+        <button class="subsection-scroll-btn subsection-scroll-btn--next" aria-label="次へ"><span>&#8250;</span></button>
+    </div>
+</aside>
+<script>
+(function () {
+    var wrapper = document.querySelector('.subsection-list-wrapper');
+    if (!wrapper) return;
+    var list = wrapper.querySelector('.subsection-list');
+    var prev = wrapper.querySelector('.subsection-scroll-btn--prev');
+    var next = wrapper.querySelector('.subsection-scroll-btn--next');
+    var tile = list.querySelector('article');
+    var step = tile ? tile.offsetWidth + 24 : 280;
+
+    function update() {
+        prev.style.visibility = list.scrollLeft <= 0 ? 'hidden' : 'visible';
+        next.style.visibility = list.scrollLeft + list.clientWidth >= list.scrollWidth - 1 ? 'hidden' : 'visible';
+    }
+
+    prev.addEventListener('click', function () { list.scrollBy({ left: -step, behavior: 'smooth' }); });
+    next.addEventListener('click', function () { list.scrollBy({ left: step, behavior: 'smooth' }); });
+    list.addEventListener('scroll', update);
+    update();
+})();
+</script>
+{{ end }}

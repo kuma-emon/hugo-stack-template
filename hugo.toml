@@ -1,0 +1,83 @@
+baseURL = 'https://example.com/'
+capitalizeListTitles = false
+enableRobotsTXT = true
+languageCode = 'ja'
+title = 'サイト名'
+theme = 'stack'
+timeZone = 'Asia/Tokyo'
+
+# [services.googleAnalytics]
+#   ID = 'G-XXXXXXXXXX'
+
+[pagination]
+  pagerSize = 50
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.highlight]
+  noClasses = false
+
+[params]
+  mainSections = ["posts"]
+  # favicon = ""
+  # adsensePublisherID = "ca-pub-XXXXXXXXXXXXXXXX"
+  # amazonTag           = ""
+  contactFormURL      = ""
+  commentFormURL      = ""
+  commentFormEntryID  = ""
+
+[params.dateFormat]
+  published   = "2006年1月2日"
+  lastUpdated = "2006年1月2日"
+
+[params.footer]
+
+[params.sidebar]
+  compact = false
+  # avatar = ""
+
+[params.widgets]
+  homepage = []
+  page     = [{ type = "toc" }]
+
+[params.article]
+  toc         = true
+  readingTime = false
+
+  [params.article.list]
+    showTags = true
+
+[menu]
+  [[menu.main]]
+    name       = 'ホーム'
+    url        = '/'
+    weight     = 1
+    [menu.main.params]
+      icon = 'home'
+  [[menu.main]]
+    name       = 'タグ'
+    url        = '/tags/'
+    weight     = 4
+    [menu.main.params]
+      icon = 'tag'
+  [[menu.main]]
+    name       = 'お問い合わせ'
+    url        = ''
+    weight     = 8
+    [menu.main.params]
+      icon        = 'messages'
+      newTab      = true
+      contactForm = true
+  [[menu.main]]
+    name       = 'プライバシー<br>ポリシー'
+    url        = '/page/privacy/'
+    weight     = 6
+    [menu.main.params]
+      icon = 'user'
+  [[menu.main]]
+    name       = '利用規約'
+    url        = '/page/terms/'
+    weight     = 7
+    [menu.main.params]
+      icon = 'link'

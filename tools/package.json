@@ -1,0 +1,18 @@
+{
+  "name": "hugo-stack-template",
+  "version": "1.0.0",
+  "description": "WordPress XML to Hugo Markdown converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "fast-xml-parser": "^5.5.10",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
+}

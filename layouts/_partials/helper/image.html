@@ -1,0 +1,36 @@
+{{ $result := dict }}
+
+{{ if .Image }}
+    {{ $url := urls.Parse .Image }}
+
+    {{ if in (slice "https" "http") $url.Scheme }}
+        {{/* Remote image */}}
+        {{ $result = dict
+            "Resource" nil
+            "Permalink" .Image
+            "Height" nil
+            "Width" nil
+        }}
+    {{ else }}
+        {{/* Local image: /images/... はそのままpermalinkとして使用 */}}
+        {{ $resource := .Resources.Get (printf "%s" (.Image | safeURL)) }}
+        {{ if $resource }}
+            {{ $result = dict
+                "Resource" $resource
+                "Permalink" $resource.RelPermalink
+                "Height" $resource.Height
+                "Width" $resource.Width
+            }}
+        {{ else }}
+            {{/* static/ フォルダの画像はpermalinkとして直接使用 */}}
+            {{ $result = dict
+                "Resource" nil
+                "Permalink" .Image
+                "Height" nil
+                "Width" nil
+            }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ return $result }}

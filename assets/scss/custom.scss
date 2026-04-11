@@ -1,0 +1,341 @@
+:root {
+    --menu-icon-separation: 8px;
+    --heading-border-size: 12px;
+    --main-top-padding: 20px;
+}
+
+.sidebar .site-name {
+    white-space: nowrap;
+}
+
+// Chroma シンタックスハイライト配色（VSCode ライト: vs / ダーク: github-dark）
+[data-scheme="light"] {
+    @import "chroma-light";
+}
+[data-scheme="dark"] {
+    @import "chroma-dark";
+}
+
+// 見出しの左線を親の端から12px内側に、幅12pxで描画
+.article-content {
+    h1, h2, h3, h4, h5, h6 {
+        margin-inline-start: calc((var(--card-padding) - 12px) * -1);
+        padding-inline-start: calc(var(--card-padding) - 12px - 12px);
+    }
+
+    ul {
+        list-style: disc;
+        padding-inline-start: 1.5em;
+        color: var(--card-text-color-main);
+    }
+}
+
+// トップページ上部の検索フォーム
+.search-form--top {
+    margin-bottom: -20px;
+
+    p {
+        display: flex;
+        gap: 8px;
+        margin: 0;
+    }
+
+    input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid var(--card-separator-color);
+        border-radius: 6px;
+        background: var(--card-background);
+        color: var(--card-text-color-main);
+        font-size: 1.4rem;
+    }
+
+    button {
+        padding: 8px 10px;
+        border: none;
+        background: none;
+        color: var(--card-text-color-secondary);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--card-text-color-main);
+        }
+    }
+}
+
+// フッター区切り線をfooter幅いっぱいに伸ばす・flex行として独立させる
+footer.site-footer::before {
+    width: 100%;
+    flex-basis: 100%;
+    margin-bottom: 5px;
+}
+
+// フッターを左右に分けて配置
+footer.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+[data-scheme="light"] {
+    --code-text-color: #444444;
+}
+
+
+.container.extended,
+.container.compact {
+    @include respond(md) {
+        --left-sidebar-max-width: 135px;
+    }
+}
+
+// サイドバー上部の padding を縮小
+.left-sidebar {
+    @include respond(md) {
+        padding-top: 20px;
+    }
+    @include respond(lg) {
+        padding-top: 20px;
+    }
+}
+
+
+// 日付アイコンと日付テキストを横並びに・間隔を半分に
+.article-meta.inline-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+}
+
+// 最終更新ラベルと日付
+.lastmod-label {
+    font-size: 0.85em;
+    color: var(--card-text-color-secondary);
+}
+
+.article-time--lastmod {
+    font-size: 0.85em;
+    color: var(--card-text-color-secondary);
+    margin-right: 8px;
+}
+
+// ダークモードトグル：モードに応じて sun/moon を切り替え表示
+#dark-mode-toggle .icon-sun,
+#dark-mode-toggle .icon-moon {
+    display: none;
+}
+
+[data-scheme="light"] #dark-mode-toggle .icon-sun {
+    display: inline-block;
+}
+
+[data-scheme="dark"] #dark-mode-toggle .icon-moon {
+    display: inline-block;
+}
+
+// カテゴリ・タグページの記事リスト padding を縮小
+.article-list--compact {
+    --small-card-padding: 15px;
+}
+
+// article-details のパディングを縮小
+.article-details {
+    padding: 10px;
+}
+
+// 記事本文の画像に淡い枠を追加
+.article-content img {
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+[data-scheme="dark"] .article-content img {
+    border-color: #404040;
+}
+
+// 関連コンテンツのスクロールボタン付きラッパー
+.subsection-list-wrapper {
+    position: relative;
+}
+
+.subsection-list {
+    overflow-x: auto;
+    scrollbar-width: none;
+    isolation: isolate;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.subsection-scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: var(--accent-color-text);
+    font-size: 3.4rem;
+    line-height: 1;
+
+    span {
+        display: block;
+        transform: translateY(-0.1em);
+    }
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-l1);
+    transition: background 0.15s;
+
+    &:hover {
+        background: var(--accent-color-darker);
+    }
+
+    &--prev { left: -12px; }
+    &--next { right: -12px; }
+}
+
+// トップページ記事一覧の article-details 子要素間隔を縮小（15px → 7px）
+.article-list .article-details {
+    gap: 7px;
+}
+
+// 記事本文のコードブロックに左右の余白（言語指定あり・なし両方）
+.article-content .highlight,
+.article-content pre {
+    margin: 0 16px;
+    max-width: calc(100% - 32px);
+    overflow-x: auto;
+}
+
+// リンクのホバーアニメーションをシンプルな下線変化に（色変化なし）
+a.link {
+    box-shadow: none;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+
+    &:hover {
+        box-shadow: none;
+        color: var(--accent-color);
+        text-decoration-style: solid;
+    }
+}
+
+// タグ・カテゴリのバッジリンク：サイズ縮小・ホバー時に色変化・下線なし
+.article-tags a,
+.article-category a {
+    font-size: 1.1rem;
+    padding: 6px 13px;
+    text-decoration: none;
+    transition: none;
+
+    &:hover {
+        color: var(--accent-color-text);
+        background-color: var(--accent-color);
+        text-decoration: none;
+    }
+}
+
+// コメントセクションのタイトル（h2 タグを避けて TOC から除外）
+.comment-section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 1.2rem 0 0.8rem;
+}
+
+// アフィリエイトリンクのスタイル
+.affi-link {
+    display: block;
+    color: var(--accent-color);
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+}
+
+// 記事末尾のお問い合わせフォーム
+.contact-form-section {
+    margin-top: 40px;
+
+.contact-form-button {
+        display: inline-block;
+        padding: 10px 24px;
+        background-color: var(--accent-color);
+        color: var(--accent-color-text);
+        border-radius: 6px;
+        text-decoration: none;
+
+        &:hover {
+            background-color: var(--accent-color-darker);
+            color: var(--accent-color-text);
+            text-decoration: none;
+        }
+    }
+}
+
+// 記事一覧のカード全体をクリック可能にする
+.article-list article {
+    position: relative;
+
+    .article-title a::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    .article-tags a {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+// トップページ記事一覧の記事間スペースを縮小
+.article-list {
+    gap: 20px;
+}
+
+// 記事一覧の横並びレイアウト
+.article-list article .article-header--list {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+
+    .article-image {
+        width: 180px;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+    }
+
+    .article-header-right {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .article-summary {
+        margin-top: 8px;
+        font-size: 0.875em;
+        color: var(--card-text-color-secondary);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}

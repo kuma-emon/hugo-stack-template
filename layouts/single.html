@@ -1,0 +1,63 @@
+{{ define "body-class" }}
+    article-page
+    {{- $HasWidgetNotTOC := false -}}
+    {{- $TOCWidgetEnabled := false -}}
+    {{- range .Site.Params.widgets.page -}}
+        {{- if ne .type "toc" -}}
+            {{ $HasWidgetNotTOC = true -}}
+        {{- else -}}
+            {{ $TOCWidgetEnabled = true -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $TOCManuallyDisabled := eq .Params.toc false -}}
+    {{- $TOCEnabled := and (not $TOCManuallyDisabled) $TOCWidgetEnabled -}}
+    {{- $hasTOC := ge (len .TableOfContents) 100 -}}
+    {{- .Scratch.Set "TOCEnabled" (and $TOCEnabled $hasTOC) -}}
+
+    {{- $hasWidget := or $HasWidgetNotTOC (and $TOCEnabled $hasTOC) -}}
+    {{- .Scratch.Set "hasWidget" $hasWidget -}}
+    {{- if not $hasWidget }} no-right-sidebar{{ end -}}
+{{ end }}
+
+{{ define "main" }}
+    {{ partial "article/article.html" . }}
+
+    {{ if .Params.links }}
+        {{ partial "article/components/links" . }}
+    {{ end }}
+
+    {{ partial "article/components/related-content" . }}
+
+    {{ if and (ne .Section "page") .Site.Params.commentFormURL }}
+    <section class="contact-form-section">
+        <a href="{{ .Site.Params.commentFormURL }}?usp=pp_url&entry.{{ .Site.Params.commentFormEntryID }}={{ .Permalink | urlquery }}" target="_blank" rel="noopener" class="contact-form-button">
+            コメントを送る
+        </a>
+    </section>
+    {{ end }}
+
+    {{ partialCached "footer/footer" . }}
+
+    {{ with .Site.Params.amazonTag }}
+    <script>
+    (function() {
+        var tag = '{{ . }}';
+        document.querySelectorAll('.article-content a[href*="amazon.co.jp"]').forEach(function(a) {
+            var url = new URL(a.href);
+            if (!url.searchParams.has('tag')) {
+                url.searchParams.set('tag', tag);
+                a.href = url.toString();
+            }
+        });
+    })();
+    </script>
+    {{ end }}
+
+    {{ partialCached "article/components/photoswipe" . }}
+    {{ partial "article/components/mermaid" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ if .Scratch.Get "hasWidget" }}{{ partial "sidebar/right.html" (dict "Context" . "Scope" "page") }}{{ end}}
+{{ end }}
