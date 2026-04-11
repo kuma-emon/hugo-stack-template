@@ -88,6 +88,8 @@ Firebase Hosting を使う場合は手順 2〜3 を、Cloudflare Pages を使う
 
 設定が完了すると、`main` への push ごとに自動でビルド・デプロイされます。
 
+> **注意：** このリポジトリを fork した場合、GitHub Actions はデフォルトで無効になっています。**Settings > Actions > General** で `Allow all actions` を選択して有効化してください。
+
 ### 2'. Cloudflare Pages を使う場合
 
 Firebase の設定ファイル（`firebase.json` / `.firebaserc` / `.github/workflows/deploy.yml`）は使用しません。削除するか、そのまま放置しても動作に影響しません。
