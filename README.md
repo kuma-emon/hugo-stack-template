@@ -149,7 +149,32 @@ google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
   amazonTag = "your-tag-22"
 ```
 
-### 6. （任意）お問い合わせフォーム・コメントフォーム
+タグは JavaScript によってページ表示時に自動付与されます。対象は記事本文内の `amazon.co.jp` を含むリンクです。
+
+`{{< affi >}}` ショートコード経由のリンクはタグ自動付与の対象外です。affi リンクの URL は `affi-mapping.json` で直接管理してください。
+
+### 6. （任意）カスタムドメインの設定
+
+#### Firebase Hosting の場合
+
+1. [Firebase コンソール](https://console.firebase.google.com/) の **Hosting > カスタムドメインを追加** を開きます。
+2. 取得済みのドメイン（例：`example.com`）を入力します。
+3. 表示された DNS レコード（A レコードまたは TXT レコード）をドメインの DNS 管理画面に追加します。
+4. 反映されると HTTPS が自動で有効になります。
+
+#### Cloudflare Pages の場合
+
+1. Cloudflare ダッシュボードの **Pages > プロジェクト > カスタムドメイン** を開きます。
+2. ドメインを入力して追加します。
+3. ドメインの DNS を Cloudflare で管理している場合は CNAME レコードが自動で作成されます。他の DNS プロバイダーを使っている場合は、表示された CNAME レコードを手動で追加します。
+
+どちらの場合も、`hugo.toml` の `baseURL` をカスタムドメインに更新してください：
+
+```toml
+baseURL = 'https://example.com/'
+```
+
+### 7. （任意）お問い合わせフォーム・コメントフォーム
 
 Google フォームを使ったお問い合わせ・コメント機能を設定できます。
 
@@ -195,6 +220,7 @@ hugo-stack-template/
 ├── themes/
 │   └── stack/              # Stack テーマ（直接同梱）
 ├── layouts/                # Stack テーマのカスタムレイアウト
+│   └── robots.txt          # robots.txt テンプレート（baseURL から Sitemap URL を動的生成）
 ├── assets/
 │   ├── scss/               # カスタム SCSS
 │   ├── css/extended/       # 追加 CSS
@@ -202,16 +228,16 @@ hugo-stack-template/
 ├── data/
 │   └── affi-mapping.json   # affi ショートコード用アフィリエイトリンクデータ
 └── static/
-    ├── images/             # 記事画像
-    └── robots.txt
+    └── images/             # 記事画像
 ```
 
 各サブディレクトリの詳細は README を参照してください：
 
-- [tools/README.md](tools/README.md) - WordPress 移行ツール
-- [layouts/README.md](layouts/README.md) - カスタムレイアウト
-- [assets/scss/README.md](assets/scss/README.md) - SCSS カスタマイズ
+- [content/posts/README.md](content/posts/README.md) - 記事の書き方
 - [content/page/README.md](content/page/README.md) - 固定ページ
+- [layouts/README.md](layouts/README.md) - カスタムレイアウト・ショートコード
+- [assets/scss/README.md](assets/scss/README.md) - SCSS カスタマイズ
+- [tools/README.md](tools/README.md) - WordPress 移行ツール
 
 ## ライセンス
 
