@@ -1,0 +1,8 @@
+{{- $id := .Get "id" | string -}}
+{{- $mapping := index hugo.Data "affi-mapping" -}}
+{{- $entry := index $mapping $id -}}
+{{- if $entry -}}
+<a href="{{ $entry.url }}" target="_blank" rel="noopener" class="affi-link">{{ $entry.text }}</a>
+{{- else -}}
+<!-- affi id={{ $id }} not found -->
+{{- end -}}

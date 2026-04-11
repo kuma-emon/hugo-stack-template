@@ -1,0 +1,25 @@
+{{ define "main" }}
+    {{- $paginator := partial "helper/paginator.html" . -}}
+
+    {{- $searchPage := first 1 (where .Site.Pages "Layout" "==" "search") -}}
+    {{- if $searchPage -}}
+        {{- $sp := index $searchPage 0 -}}
+        <form action="{{ $sp.RelPermalink }}" class="search-form search-form--top">
+            <p>
+                <input name="keyword" required placeholder="キーワードで検索" />
+                <button type="submit">
+                    {{ partial "helper/icon" "search" }}
+                </button>
+            </p>
+        </form>
+    {{- end -}}
+
+    <section class="article-list">
+        {{ range $index, $element := $paginator.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
