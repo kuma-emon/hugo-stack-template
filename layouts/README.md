@@ -47,8 +47,8 @@ Hugo は `themes/stack/layouts/` より `layouts/` を優先するため、同�
     "url": "https://www.amazon.co.jp/dp/XXXXXXXXXX"
   },
   "2": {
-    "text": "商品名 (楽天)",
-    "url": "https://item.rakuten.co.jp/..."
+    "text": "商品名 B (Amazon)",
+    "url": "https://www.amazon.co.jp/dp/XXXXXXXXXX"
   }
 }
 ```
