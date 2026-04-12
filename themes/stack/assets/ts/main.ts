@@ -31,14 +31,11 @@ let Stack = {
         const copyText = `Copy`,
             copiedText = `Copied!`;
 
-        highlights.forEach(highlight => {
+        const addCopyButton = (container: Element, codeBlock: Element) => {
             const copyButton = document.createElement('button');
-            copyButton.innerHTML = copyText;
+            copyButton.textContent = copyText;
             copyButton.classList.add('copyCodeButton');
-            highlight.appendChild(copyButton);
-
-            const codeBlock = highlight.querySelector('code[data-lang]');
-            if (!codeBlock) return;
+            container.appendChild(copyButton);
 
             copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(codeBlock.textContent)
@@ -54,6 +51,20 @@ let Stack = {
                         console.log('Something went wrong', err);
                     });
             });
+        };
+
+        highlights.forEach(highlight => {
+            const codeBlock = highlight.querySelector('code[data-lang]') ?? highlight.querySelector('code');
+            if (!codeBlock) return;
+            addCopyButton(highlight, codeBlock);
+        });
+
+        document.querySelectorAll('.article-content pre').forEach(pre => {
+            if (pre.closest('.highlight')) return;
+            const codeBlock = pre.querySelector('code');
+            if (!codeBlock) return;
+            (pre as HTMLElement).style.position = 'relative';
+            addCopyButton(pre, codeBlock);
         });
 
         new StackColorScheme(document.getElementById('dark-mode-toggle')!);
