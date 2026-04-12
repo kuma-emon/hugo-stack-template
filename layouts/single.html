@@ -39,21 +39,6 @@
 
     {{ partialCached "footer/footer" . }}
 
-    {{ with .Site.Params.amazonTag }}
-    <script>
-    (function() {
-        var tag = '{{ . }}';
-        document.querySelectorAll('.article-content a[href*="amazon.co.jp"]').forEach(function(a) {
-            var url = new URL(a.href);
-            if (!url.searchParams.has('tag')) {
-                url.searchParams.set('tag', tag);
-                a.href = url.toString();
-            }
-        });
-    })();
-    </script>
-    {{ end }}
-
     {{ partialCached "article/components/photoswipe" . }}
     {{ partial "article/components/mermaid" . }}
 {{ end }}
