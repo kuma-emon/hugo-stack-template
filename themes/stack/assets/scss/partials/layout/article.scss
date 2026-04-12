@@ -391,6 +391,12 @@
         transition: opacity 0.3s ease;
     }
 
+    pre:hover {
+        .copyCodeButton {
+            opacity: 1;
+        }
+    }
+
     .table-wrapper {
         padding: 0 var(--card-padding);
         overflow-x: auto;
