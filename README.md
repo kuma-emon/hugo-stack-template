@@ -35,7 +35,7 @@
 `hugo.toml` を開き、以下の値を書き換えます：
 
 ```toml
-baseURL = 'https://your-site.com/'
+baseURL = 'https://example.com/'
 title = 'サイト名'
 ```
 
@@ -149,9 +149,7 @@ google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
   amazonTag = "your-tag-22"
 ```
 
-タグは JavaScript によってページ表示時に自動付与されます。対象は記事本文内の `amazon.co.jp` を含むリンクです。
-
-`{{< affi >}}` ショートコード経由のリンクはタグ自動付与の対象外です。affi リンクの URL は `affi-mapping.json` で直接管理してください。
+タグはビルド時に自動付与されます。`{{< affi >}}` ショートコード経由の Amazon リンクに適用されます。
 
 ### 6. （任意）カスタムドメインの設定
 
