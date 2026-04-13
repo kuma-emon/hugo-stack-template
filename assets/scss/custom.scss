@@ -339,3 +339,8 @@ a.link {
         overflow: hidden;
     }
 }
+
+// 連続するコードブロック間にマージンを追加
+.article-content .highlight + .highlight {
+    margin-top: 1.5em;
+}
