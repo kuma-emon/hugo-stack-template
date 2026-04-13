@@ -61,8 +61,17 @@ td.addRule('fencedCodeBlock', {
     if (!lang && dataLang) lang = dataLang;
     // wp-block-code の後ろに言語が書かれている場合（例: "wp-block-code javascript"）
     if (!lang && cls.includes('wp-block-code')) {
-      const wpLang = cls.replace('wp-block-code', '').trim();
-      if (wpLang) lang = wpLang;
+      // language-xxx クラス形式（WordPress Gutenberg 標準）を優先
+      const langMatch = cls.match(/\blanguage-(\w+)\b/);
+      if (langMatch) {
+        lang = langMatch[1];
+      } else {
+        // has-* / is-* などのスタイルクラスを除き、言語識別子らしいトークンを探す
+        const candidate = cls.replace('wp-block-code', '').trim()
+          .split(/\s+/)
+          .find(c => c && /^[a-zA-Z][a-zA-Z0-9+#]*$/.test(c));
+        if (candidate) lang = candidate;
+      }
     }
 
     const code = node.querySelector('code').textContent;
