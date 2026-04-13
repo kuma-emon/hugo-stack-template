@@ -79,7 +79,7 @@ export default (container: HTMLElement) => {
         }
         if (caption) {
             const figcaption = document.createElement('figcaption');
-            figcaption.innerHTML = caption;
+            figcaption.textContent = caption;
             figure.appendChild(figcaption);
         }
     }
