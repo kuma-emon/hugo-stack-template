@@ -21,6 +21,10 @@
     h1, h2, h3, h4, h5, h6 {
         margin-inline-start: calc((var(--card-padding) - 12px) * -1);
         padding-inline-start: calc(var(--card-padding) - 12px - 12px);
+
+        @media (max-width: 1279px) {
+            padding-inline-start: 6px;
+        }
     }
 
     ul {
