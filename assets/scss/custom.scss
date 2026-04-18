@@ -366,3 +366,26 @@ a.link {
 .article-content .highlight + .highlight {
     margin-top: 1.5em;
 }
+
+
+// スマホ縦持ち（768px未満）：サイドバーヘッダーを横並びにして縦スペースを削減
+@media (max-width: 767px) {
+    .sidebar header {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .left-sidebar {
+        --sidebar-avatar-size: 64px;
+        --sidebar-element-separation: 12px;
+    }
+
+    .main-container {
+        gap: 16px;
+    }
+
+    // メニューを開いたとき：メニュー底辺と検索フォームの間隔を追加
+    .main-container:has(#main-menu.show) main.main {
+        margin-top: 16px;
+    }
+}
