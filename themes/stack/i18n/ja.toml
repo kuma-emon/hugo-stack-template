@@ -42,7 +42,7 @@ darkMode   = "ダークモード"
 
 [footer]
     builtWith  = "{{ .Generator }} で構築されています。"
-    designedBy = "テーマ {{ .Theme }} は {{ .DesignedBy }} によって設計されています。"
+    designedBy = "Theme {{ .Theme }} designed by {{ .DesignedBy }}"
 
 [cookies]
     title             = "Cookieの同意"
