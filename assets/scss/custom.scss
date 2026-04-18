@@ -305,21 +305,24 @@ a.link {
     gap: 20px;
 }
 
-// 記事一覧の横並びレイアウト
+// 記事一覧のレイアウト
 .article-list article .article-header--list {
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
-    gap: 16px;
+
+    // スマホ縦持ち（640px 未満）：縦レイアウト（画像上・テキスト下）
+    flex-direction: column;
+    gap: 0;
 
     .article-image {
-        width: 180px;
+        width: 100%;
         flex-shrink: 0;
 
         img {
             width: 100%;
-            height: auto;
-            border-radius: 6px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 6px 6px 0 0;
         }
     }
 
@@ -337,6 +340,21 @@ a.link {
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+    }
+
+    // 640px 以上：横並びレイアウト（画像左・テキスト右）
+    @include respond(sm) {
+        flex-direction: row;
+        gap: 16px;
+
+        .article-image {
+            width: 180px;
+
+            img {
+                height: auto;
+                border-radius: 6px;
+            }
+        }
     }
 }
 
