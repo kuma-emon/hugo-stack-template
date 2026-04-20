@@ -12,6 +12,8 @@
 - ダーク/ライトモード切り替え（sun/moon アイコン）
 - シンタックスハイライト（Chroma カスタム配色）
 - アフィリエイトリンク ショートコード（`{{< affi id="X" >}}`）
+- ファイル埋め込みコードブロック ショートコード（`{{< codefile "path/to/file.js" "js" >}}`）
+- テーブルの横スクロール対応（`<div class="table-wrapper">` で自動ラップ）
 - WordPress XML → Hugo Markdown 変換ツール（`tools/convert.js`）
 - プライバシーポリシー・利用規約・検索・アーカイブページ同梱
 
@@ -218,7 +220,12 @@ hugo-stack-template/
 ├── themes/
 │   └── stack/              # Stack テーマ（直接同梱）
 ├── layouts/                # Stack テーマのカスタムレイアウト
-│   └── robots.txt          # robots.txt テンプレート（baseURL から Sitemap URL を動的生成）
+│   ├── robots.txt          # robots.txt テンプレート（baseURL から Sitemap URL を動的生成）
+│   ├── _partials/article/components/content.html  # テーブルを table-wrapper でラップ（横スクロール対応）
+│   └── _shortcodes/
+│       ├── affi.html       # アフィリエイトリンク（data/affi-mapping.json 参照）
+│       ├── codefile.html   # assets/ 配下のファイルをコードブロックとして表示
+│       └── site-name.html  # サイト名の出力
 ├── assets/
 │   ├── scss/               # カスタム SCSS
 │   ├── css/extended/       # 追加 CSS
