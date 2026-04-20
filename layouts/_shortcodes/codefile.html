@@ -1,0 +1,6 @@
+{{ $path := .Get 0 }}
+{{ $lang := default "text" (.Get 1) }}
+{{ $file := resources.Get $path }}
+{{ with $file }}
+{{ highlight .Content $lang "" }}
+{{ end }}
