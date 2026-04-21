@@ -148,12 +148,16 @@ class Search {
         const rawData = await this.getData();
         const results: pageData[] = [];
 
-        const regex = new RegExp(keywords.filter((v, index, arr) => {
-            arr[index] = escapeRegExp(v);
-            return v.trim() !== '';
-        }).join('|'), 'gi');
+        const escapedKeywords = keywords.filter(v => v.trim() !== '').map(v => escapeRegExp(v));
+        if (escapedKeywords.length === 0) return results;
+
+        const regex = new RegExp(escapedKeywords.join('|'), 'gi');
 
         for (const item of rawData) {
+            const combinedText = item.title + '\n' + item.content;
+            const allMatch = escapedKeywords.every(kw => new RegExp(kw, 'i').test(combinedText));
+            if (!allMatch) continue;
+
             const titleMatches: match[] = [],
                 contentMatches: match[] = [];
 
