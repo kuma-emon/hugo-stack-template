@@ -1,6 +1,5 @@
 {{ $path := .Get 0 }}
 {{ $lang := default "text" (.Get 1) }}
-{{ $file := resources.Get $path }}
-{{ with $file }}
-{{ highlight .Content $lang "" }}
+{{ $content := os.ReadFile (printf "assets/%s" $path) }}
+{{ with $content }}{{ highlight . $lang "" }}
 {{ end }}
