@@ -29,7 +29,7 @@
 
     {{ partial "article/components/related-content" . }}
 
-    {{ if and (ne .Section "page") .Site.Params.commentFormURL }}
+    {{ if and (ne .Section "page") .Site.Params.commentFormURL .Site.Params.commentFormEntryID }}
     <section class="contact-form-section">
         <a href="{{ .Site.Params.commentFormURL }}?usp=pp_url&entry.{{ .Site.Params.commentFormEntryID }}={{ .Permalink | urlquery }}" target="_blank" rel="noopener" class="contact-form-button">
             コメントを送る
