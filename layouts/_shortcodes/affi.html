@@ -1,5 +1,5 @@
 {{- $id := .Get "id" | string -}}
-{{- $mapping := index hugo.Data "affi-mapping" -}}
+{{- $mapping := index .Site.Data "affi-mapping" -}}
 {{- $entry := index $mapping $id -}}
 {{- if $entry -}}
 {{- $url := $entry.url -}}
