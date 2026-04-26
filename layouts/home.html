@@ -16,7 +16,8 @@
 
     <section class="article-list">
         {{ range $index, $element := $paginator.Pages }}
-            {{ partial "article-list/default" . }}
+            {{- $isLCP := and (eq $index 0) (eq $paginator.PageNumber 1) -}}
+            {{ partial "article-list/default" (dict "Page" $element "IsLCP" $isLCP) }}
         {{ end }}
     </section>
 
