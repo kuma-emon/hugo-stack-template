@@ -41,6 +41,13 @@ timeZone = 'Asia/Tokyo'
   homepage = []
   page     = [{ type = "toc" }]
 
+[params.imageProcessing]
+  [params.imageProcessing.content]
+    enabled = true
+    widths  = [480, 800, 1200]
+  [params.imageProcessing.thumbnail]
+    enabled = true
+
 [params.article]
   toc         = true
   readingTime = false
