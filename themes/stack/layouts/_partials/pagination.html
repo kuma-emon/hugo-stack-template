@@ -5,7 +5,7 @@
     <a class="page-link {{ if not $pag.Prev }}disabled{{ end }}"
         {{- if $pag.Prev -}}href="{{ $pag.Prev.URL }}" {{- end -}}
         aria-label="Previous page" 
-        {{- if not $pag.Prev -}}aria-disabled="true"{{- end -}}>
+        {{- if not $pag.Prev -}}role="link" aria-disabled="true" tabindex="-1"{{- end -}}>
         {{ partial "helper/icon" "chevron-left" }}
     </a>
 
@@ -63,7 +63,7 @@
     <a class="page-link {{ if not $pag.Next }}disabled{{ end }}"
         {{- if $pag.Next -}}href="{{ $pag.Next.URL }}" {{- end -}} 
         aria-label="Next page"
-        {{- if not $pag.Next -}}aria-disabled="true"{{- end -}}>
+        {{- if not $pag.Next -}}role="link" aria-disabled="true" tabindex="-1"{{- end -}}>
         {{ partial "helper/icon" "chevron-right" }}
     </a>
 </nav>
