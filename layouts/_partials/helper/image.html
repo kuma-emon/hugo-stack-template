@@ -22,13 +22,25 @@
                 "Width" $resource.Width
             }}
         {{ else }}
-            {{/* static/ フォルダの画像はpermalinkとして直接使用 */}}
-            {{ $result = dict
-                "Resource" nil
-                "Permalink" .Image
-                "Height" nil
-                "Width" nil
-            }}
+            {{/* assets/ から取得を試みる（先頭の / を除いてパス解決） */}}
+            {{ $assetPath := strings.TrimPrefix "/" .Image }}
+            {{ $resource = resources.Get $assetPath }}
+            {{ if $resource }}
+                {{ $result = dict
+                    "Resource" $resource
+                    "Permalink" $resource.RelPermalink
+                    "Height" $resource.Height
+                    "Width" $resource.Width
+                }}
+            {{ else }}
+                {{/* static/ フォルダの画像はpermalinkとして直接使用 */}}
+                {{ $result = dict
+                    "Resource" nil
+                    "Permalink" .Image
+                    "Height" nil
+                    "Width" nil
+                }}
+            {{ end }}
         {{ end }}
     {{ end }}
 {{ end }}
