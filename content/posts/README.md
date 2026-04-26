@@ -23,7 +23,7 @@ date = "2026-01-01T10:00:00+09:00"
 lastmod = "2026-01-01T10:00:00+09:00"
 draft = false
 url = "/posts/my-first-article/"
-image = "/images/eyecatch.jpg"
+image = "/images/eyecatch.webp"
 categories = ["カテゴリ名"]
 tags = ["タグ1", "タグ2"]
 +++
@@ -44,10 +44,10 @@ tags = ["タグ1", "タグ2"]
 
 ### 3. 画像を追加する
 
-アイキャッチ画像は `static/images/` に配置します。
+アイキャッチ画像は `assets/images/` に WebP 形式で配置します。
 
 ```
-static/images/eyecatch.jpg  →  image = "/images/eyecatch.jpg"
+assets/images/eyecatch.webp  →  image = "/images/eyecatch.webp"
 ```
 
 ### 4. ローカルで確認する

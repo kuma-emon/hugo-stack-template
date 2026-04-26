@@ -2,7 +2,7 @@
 title = "サンプル記事"
 date = "2026-01-01"
 draft = false
-image = "/images/eyecatch-sample.jpg"
+image = "/images/eyecatch-sample.webp"
 categories = ["カテゴリ"]
 tags = ["タグ"]
 +++
@@ -56,7 +56,7 @@ greeting('World');
 
 ## 画像
 
-![サンプル画像](/images/eyecatch-sample.jpg)
+![サンプル画像](/images/eyecatch-sample.webp)
 
 画像は `static/images/` に配置し、`/images/` から参照します。
 

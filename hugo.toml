@@ -35,7 +35,7 @@ timeZone = 'Asia/Tokyo'
 
 [params.sidebar]
   compact = false
-  # avatar = ""
+  avatar = "avatar.webp"
 
 [params.widgets]
   homepage = []
