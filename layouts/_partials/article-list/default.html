@@ -1,0 +1,6 @@
+{{- $page := .Page -}}
+{{- $isLCP := .IsLCP | default false -}}
+{{ $image := partial "helper/image" (dict "Image" $page.Params.image "Resources" $page.Resources "Context" $page) }}
+<article class="{{ if $image }}has-image{{ end }}">
+    {{ partial "article/components/header" (dict "Page" $page "IsList" true "IsLCP" $isLCP) }}
+</article>
