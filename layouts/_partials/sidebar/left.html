@@ -7,12 +7,20 @@
 
     <header>
         {{ with .Site.Params.sidebar.avatar }}
-            {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
+            {{- $avatarSrc := . -}}
+            {{- $avatarWidth := 400 -}}
+            {{- $avatarHeight := 400 -}}
+            {{- with resources.Get . -}}
+                {{- $resized := .Resize "224x224 webp" -}}
+                {{- $avatarSrc = $resized.RelPermalink -}}
+                {{- $avatarWidth = 224 -}}
+                {{- $avatarHeight = 224 -}}
+            {{- end -}}
             <figure class="site-avatar">
                 <a href="{{ $.Site.Home.RelPermalink }}">
-                    <img src="{{ $avatar.Permalink }}"
-                        width="{{ $avatar.Width }}"
-                        height="{{ $avatar.Height }}"
+                    <img src="{{ $avatarSrc }}"
+                        width="{{ $avatarWidth }}"
+                        height="{{ $avatarHeight }}"
                         class="site-logo"
                         loading="lazy"
                         alt="Avatar">
