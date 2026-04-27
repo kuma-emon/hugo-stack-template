@@ -12,8 +12,8 @@
                 {{- $imgWidth := $image.Width -}}
                 {{- $imgHeight := $image.Height -}}
                 {{- if and $image.Resource (reflect.IsImageResourceProcessable $image.Resource) $Page.Site.Params.ImageProcessing.Thumbnail.Enabled -}}
-                    {{- $r1x := $image.Resource.Resize "250x" -}}
-                    {{- $r2x := $image.Resource.Resize "500x" -}}
+                    {{- $r1x := $image.Resource.Resize "250x q50 webp" -}}
+                    {{- $r2x := $image.Resource.Resize "500x q50 webp" -}}
                     {{- $imgSrc = $r1x.RelPermalink -}}
                     {{- $imgSrcset = printf "%s 250w, %s 500w" $r1x.RelPermalink $r2x.RelPermalink -}}
                     {{- $imgWidth = $r1x.Width -}}
