@@ -42,7 +42,7 @@ timeZone = 'Asia/Tokyo'
   page     = [{ type = "toc" }]
 
 [imaging]
-  quality = 70
+  quality = 65
 
 [params.imageProcessing]
   [params.imageProcessing.content]
