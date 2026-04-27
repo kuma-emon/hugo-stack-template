@@ -6,42 +6,38 @@
     {{ if $image }}
     <div class="article-image">
         <a href="{{ $Page.RelPermalink }}">
-            {{ if $IsList }}
-                {{- $imgSrc := $image.Permalink -}}
-                {{- $imgSrcset := "" -}}
-                {{- $imgWidth := $image.Width -}}
-                {{- $imgHeight := $image.Height -}}
-                {{- if and $image.Resource (reflect.IsImageResourceProcessable $image.Resource) $Page.Site.Params.ImageProcessing.Thumbnail.Enabled -}}
-                    {{- $r1x := $image.Resource.Resize "250x q50 webp" -}}
-                    {{- $r2x := $image.Resource.Resize "500x q50 webp" -}}
-                    {{- $imgSrc = $r1x.RelPermalink -}}
-                    {{- $imgSrcset = printf "%s 250w, %s 500w" $r1x.RelPermalink $r2x.RelPermalink -}}
-                    {{- $imgWidth = $r1x.Width -}}
-                    {{- $imgHeight = $r1x.Height -}}
+            {{- $widths := slice -}}
+            {{- $quality := "" -}}
+            {{- $format := "" -}}
+            {{- $sizes := "" -}}
+            {{- if $IsList -}}
+                {{- if $Page.Site.Params.ImageProcessing.Thumbnail.Enabled -}}
+                    {{- $widths = slice 250 500 -}}
+                    {{- $quality = "q50" -}}
+                    {{- $format = "webp" -}}
                 {{- end -}}
-                <img src="{{ $imgSrc }}"
-                    {{- if $imgSrcset }} srcset="{{ $imgSrcset }}"{{ end }}
-                    sizes="(max-width: 767px) 180px, 250px"
-                    width="{{ $imgWidth }}"
-                    height="{{ $imgHeight }}"
-                    alt="{{ printf "Featured image of post %s" $Page.Title }}"
-                    loading="{{ if $isLCP }}eager{{ else }}lazy{{ end }}"
-                    {{- if $isLCP }} fetchpriority="high"{{ end }}>
-            {{ else }}
-                {{ partial "helper/responsive-image" (dict
-                    "Resource" $image.Resource
-                    "Widths" (cond $Page.Site.Params.ImageProcessing.Content.Enabled $Page.Site.Params.ImageProcessing.Content.Widths nil)
-                    "Attributes" (dict
-                        "src" $image.Permalink
-                        "width" $image.Width
-                        "height" $image.Height
-                        "alt" (printf "Featured image of post %s" $Page.Title)
-                        "loading" (cond $isLCP "eager" "lazy")
-                        "fetchpriority" (cond $isLCP "high" "")
-                        "sizes" "(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px"
-                    )
-                ) }}
-            {{ end }}
+                {{- $sizes = "(max-width: 767px) 180px, 250px" -}}
+            {{- else -}}
+                {{- if $Page.Site.Params.ImageProcessing.Content.Enabled -}}
+                    {{- $widths = $Page.Site.Params.ImageProcessing.Content.Widths -}}
+                {{- end -}}
+                {{- $sizes = "(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" -}}
+            {{- end -}}
+            {{ partial "helper/responsive-image" (dict
+                "Resource" $image.Resource
+                "Widths" $widths
+                "Quality" $quality
+                "Format" $format
+                "Attributes" (dict
+                    "src" $image.Permalink
+                    "width" $image.Width
+                    "height" $image.Height
+                    "alt" (printf "Featured image of post %s" $Page.Title)
+                    "loading" (cond $isLCP "eager" "lazy")
+                    "fetchpriority" (cond $isLCP "high" "")
+                    "sizes" $sizes
+                )
+            ) }}
         </a>
     </div>
     {{ end }}

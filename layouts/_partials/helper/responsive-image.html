@@ -1,0 +1,61 @@
+{{- /*
+Site override of theme's helper/responsive-image.html.
+テーマ版に Quality / Format パラメータを追加し、サムネイル等で
+WebP 変換と画質指定を扱えるようにする（Resize 文字列に付与）。
+
+Params:
+    Resource:   Hugo image resource (省略時は srcset 生成しない)
+    Widths:     srcset 用の幅スライス（[]int）
+    Quality:    Resize に渡す quality 文字列（例 "q50"・省略可）
+    Format:     Resize に渡す format 文字列（例 "webp"・省略可）
+    Attributes: <img> タグの属性 dict
+*/ -}}
+
+{{- $resource := .Resource -}}
+{{- $widths := .Widths -}}
+{{- $quality := .Quality -}}
+{{- $format := .Format -}}
+{{- $attributes := .Attributes | default dict -}}
+
+{{- $opts := slice -}}
+{{- with $quality }}{{ $opts = $opts | append . }}{{ end -}}
+{{- with $format }}{{ $opts = $opts | append . }}{{ end -}}
+{{- $optStr := delimit $opts " " -}}
+
+{{- if and $widths $resource (reflect.IsImageResourceProcessable $resource) -}}
+    {{- $variants := slice -}}
+    {{- range $widths -}}
+        {{- if lt . $resource.Width -}}
+            {{- $spec := printf "%dx" . -}}
+            {{- if $optStr -}}{{- $spec = printf "%s %s" $spec $optStr -}}{{- end -}}
+            {{- $variants = $variants | append ($resource.Resize $spec) -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if gt (len $variants) 0 -}}
+        {{- $srcset := slice -}}
+        {{- range $variants -}}
+            {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) -}}
+        {{- end -}}
+        {{- if $optStr -}}
+            {{/* Quality/Format 指定時は元画像のフォーマットが揃わないので
+                 srcset に含めず、smallest variant を src/width/height に採用 */}}
+            {{- $first := index $variants 0 -}}
+            {{- $attributes = merge $attributes (dict
+                "src" $first.RelPermalink
+                "width" $first.Width
+                "height" $first.Height
+            ) -}}
+        {{- else -}}
+            {{- $permalink := default $resource.RelPermalink (index $attributes "src") -}}
+            {{- $srcset = $srcset | append (printf "%s %dw" $permalink $resource.Width) -}}
+        {{- end -}}
+        {{- $attributes = merge $attributes (dict "srcset" (delimit $srcset ", ")) -}}
+    {{- end -}}
+{{- end -}}
+
+<img {{- range $k, $v := $attributes -}}
+    {{- if $v -}}
+        {{- printf " %s=%q" (lower $k) (printf "%v" $v) | safeHTMLAttr -}}
+    {{- end -}}
+{{- end -}}>
