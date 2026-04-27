@@ -19,6 +19,6 @@
 
         {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} &nbsp;/&nbsp;
         {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
-        <br><span class="trademark">本サイトに記載されている会社名・製品名などは、各社の商標または登録商標です。</span>
+        {{ with .Site.Params.footer.trademarkNotice }}<br><span class="trademark">{{ . }}</span>{{ end }}
     </section>
 </footer>
