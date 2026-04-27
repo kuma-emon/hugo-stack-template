@@ -32,6 +32,7 @@ timeZone = 'Asia/Tokyo'
   lastUpdated = "2006年1月2日"
 
 [params.footer]
+  trademarkNotice = "本サイトに記載されている会社名・製品名などは、各社の商標または登録商標です。"
 
 [params.sidebar]
   compact = false
