@@ -8,17 +8,19 @@
     <header>
         {{ with .Site.Params.sidebar.avatar }}
             {{- $avatarSrc := . -}}
-            {{- $avatarWidth := 400 -}}
-            {{- $avatarHeight := 400 -}}
+            {{- $avatarSrcset := "" -}}
+            {{- $avatarWidth := 112 -}}
+            {{- $avatarHeight := 112 -}}
             {{- with resources.Get . -}}
-                {{- $resized := .Resize "224x224 webp" -}}
-                {{- $avatarSrc = $resized.RelPermalink -}}
-                {{- $avatarWidth = 224 -}}
-                {{- $avatarHeight = 224 -}}
+                {{- $r1x := .Resize "112x112 webp" -}}
+                {{- $r2x := .Resize "224x224 webp" -}}
+                {{- $avatarSrc = $r1x.RelPermalink -}}
+                {{- $avatarSrcset = printf "%s 1x, %s 2x" $r1x.RelPermalink $r2x.RelPermalink -}}
             {{- end -}}
             <figure class="site-avatar">
                 <a href="{{ $.Site.Home.RelPermalink }}">
                     <img src="{{ $avatarSrc }}"
+                        {{- if $avatarSrcset }} srcset="{{ $avatarSrcset }}"{{ end }}
                         width="{{ $avatarWidth }}"
                         height="{{ $avatarHeight }}"
                         class="site-logo"
