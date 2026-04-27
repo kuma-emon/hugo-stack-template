@@ -41,6 +41,9 @@ timeZone = 'Asia/Tokyo'
   homepage = []
   page     = [{ type = "toc" }]
 
+[imaging]
+  quality = 70
+
 [params.imageProcessing]
   [params.imageProcessing.content]
     enabled = true
