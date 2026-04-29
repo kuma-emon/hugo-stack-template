@@ -115,16 +115,40 @@ footer.site-footer {
     gap: 7px;
 }
 
-// 最終更新ラベルと日付
-.lastmod-label {
-    font-size: 0.85em;
-    color: var(--card-text-color-secondary);
-}
-
+// 最終更新日時
 .article-time--lastmod {
     font-size: 0.85em;
     color: var(--card-text-color-secondary);
     margin-right: 8px;
+}
+
+// アイコンツールチップ
+.icon-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: calc(100% + 4px);
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 3px 8px;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s;
+        z-index: 10;
+    }
+
+    &:hover::after {
+        opacity: 1;
+    }
 }
 
 // ダークモードトグル：モードに応じて sun/moon を切り替え表示
