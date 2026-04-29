@@ -50,7 +50,7 @@ title = 'サイト名'
 [params]
   # favicon = "/your-favicon.png"
   # adsensePublisherID = "ca-pub-XXXXXXXXXXXXXXXX"
-  # amazonTag           = "your-tag-22"
+  # amazonTag           = "your-tag"
   contactFormURL      = "https://forms.gle/..."
   commentFormURL      = "https://docs.google.com/forms/..."
   commentFormEntryID  = "1234567890"
@@ -148,7 +148,7 @@ google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 
 ```toml
 [params]
-  amazonTag = "your-tag-22"
+  amazonTag = "your-tag"
 ```
 
 タグはビルド時に自動付与されます。`{{< affi >}}` ショートコード経由の Amazon リンクに適用されます。
