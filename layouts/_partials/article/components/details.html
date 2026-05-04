@@ -50,7 +50,7 @@
         {{ if $showTranslations }}
             {{ partial "helper/icon" "language" }}
             {{ range $Page.Translations }}
-                <a href="{{ .RelPermalink }}" class="link">{{ .Language.LanguageName }}</a>
+                <a href="{{ .RelPermalink }}" class="link">{{ .Language.Label }}</a>
             {{ end }}
         {{ end }}
     </div>
