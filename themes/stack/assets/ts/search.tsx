@@ -308,7 +308,7 @@ class Search {
     public static render(item: pageData) {
         return (
             <article>
-                <a href={item.permalink}>
+                <a href={item.permalink} target="_blank" rel="noopener noreferrer">
                     <div class="article-details">
                         <h2 class="article-title" dangerouslySetInnerHTML={{ __html: item.title }}></h2>
                         <section class="article-preview" dangerouslySetInnerHTML={{ __html: item.preview }}></section>
