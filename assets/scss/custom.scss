@@ -283,12 +283,9 @@ a.link {
     margin: 1.2rem 0 0.8rem;
 }
 
-// アフィリエイトリンクのスタイル
+// アフィリエイトリンクのスタイル（色・下線は .link クラスを継承）
 .affi-link {
     display: block;
-    color: var(--accent-color);
-    text-decoration: underline dotted;
-    text-underline-offset: 3px;
 }
 
 // 記事末尾のお問い合わせフォーム
