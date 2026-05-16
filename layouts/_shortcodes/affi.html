@@ -4,7 +4,7 @@
 {{- if $entry -}}
 {{- $url := $entry.url -}}
 {{- with .Site.Params.amazonTag -}}{{- $url = printf "%s?tag=%s" $url . -}}{{- end -}}
-<a href="{{ $url }}" target="_blank" rel="noopener" class="affi-link">{{ $entry.text }}</a>
+<a href="{{ $url }}" target="_blank" rel="noopener" class="link affi-link">{{ $entry.text }}</a>
 {{- else -}}
 <!-- affi id={{ $id }} not found -->
 {{- end -}}
