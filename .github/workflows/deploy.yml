@@ -1,6 +1,16 @@
-# Register FIREBASE_SERVICE_ACCOUNT in your GitHub repository secrets before using this workflow.
-# Set your Firebase project ID in .firebaserc.
-name: Deploy to Firebase Hosting
+# Cloudflare Pages デプロイワークフロー
+#
+# セットアップ手順：
+# 1. Cloudflare ダッシュボード → Workers & Pages → Pages で新規プロジェクトを作成
+# 2. このファイル末尾の `--project-name=your-project-name` を作成したプロジェクト名に書き換える
+# 3. GitHub リポジトリの Settings → Secrets and variables → Actions に以下を登録：
+#    - CLOUDFLARE_API_TOKEN（Cloudflare ダッシュボード → My Profile → API Tokens で発行・Pages 編集権限）
+#    - CLOUDFLARE_ACCOUNT_ID（ダッシュボード右サイドバーで確認できる Account ID）
+#
+# GitHub Actions を使わず Cloudflare Pages のダッシュボード Git 連携で配信したい場合は
+# このファイルを削除してください（README の代替セットアップ参照）。
+
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -13,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -23,12 +34,18 @@ jobs:
           hugo-version: '0.161.1'
           extended: true
 
+      - name: Set short SHA
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Build
         run: hugo --minify
+        env:
+          HUGO_PARAMS_GITHASH: ${{ env.SHORT_SHA }}
+          TZ: Asia/Tokyo
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=your-project-name --branch=${{ github.ref_name }} --commit-message=${{ env.SHORT_SHA }}
