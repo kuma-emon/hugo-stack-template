@@ -48,4 +48,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy public --project-name=your-project-name --branch=${{ github.ref_name }} --commit-message=${{ env.SHORT_SHA }}
+          command: pages deploy public --project-name=your-project-name --branch=${{ github.ref_name }} --commit-message=${{ env.SHORT_SHA }} --commit-dirty=true
