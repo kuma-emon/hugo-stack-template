@@ -77,7 +77,7 @@ GitHub Actions を経由せず、Cloudflare Pages 側でリポジトリを直接
 
 1. **Workers & Pages > Pages > Connect to Git** からこのリポジトリを連携
 2. ビルド設定: フレームワークプリセット = Hugo、ビルドコマンド = `hugo --minify`、ビルド出力ディレクトリ = `public`
-3. 環境変数: `HUGO_VERSION` = `0.161.1`
+3. 環境変数: `HUGO_VERSION` = `0.162.0`
 
 ### 5. （任意）Google Analytics
 
