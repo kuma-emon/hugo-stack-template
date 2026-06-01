@@ -16,6 +16,10 @@
 <link rel="canonical" href="{{ .Permalink }}">
 {{ end }}
 
+{{ if or (eq .Kind "term") (eq .Kind "taxonomy") }}
+<meta name="robots" content="noindex, follow">
+{{ end }}
+
 {{- partial "head/custom-font.html" . -}}
 {{- partial "head/style.html" . -}}
 {{- partial "head/script.html" . -}}
