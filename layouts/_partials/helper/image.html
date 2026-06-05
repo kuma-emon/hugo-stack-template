@@ -2,45 +2,17 @@
 
 {{ if .Image }}
     {{ $url := urls.Parse .Image }}
-
     {{ if in (slice "https" "http") $url.Scheme }}
-        {{/* Remote image */}}
-        {{ $result = dict
-            "Resource" nil
-            "Permalink" .Image
-            "Height" nil
-            "Width" nil
-        }}
+        {{/* Remote image: そのまま permalink として使用 */}}
+        {{ $result = dict "Resource" nil "Permalink" .Image "Height" nil "Width" nil }}
     {{ else }}
-        {{/* Local image: /images/... はそのままpermalinkとして使用 */}}
-        {{ $resource := .Resources.Get (printf "%s" (.Image | safeURL)) }}
+        {{/* Page Resources → assets/ の順でフォールバック取得 */}}
+        {{ $resource := or (.Resources.Get (printf "%s" (.Image | safeURL))) (resources.Get (strings.TrimPrefix "/" .Image)) }}
         {{ if $resource }}
-            {{ $result = dict
-                "Resource" $resource
-                "Permalink" $resource.RelPermalink
-                "Height" $resource.Height
-                "Width" $resource.Width
-            }}
+            {{ $result = dict "Resource" $resource "Permalink" $resource.RelPermalink "Height" $resource.Height "Width" $resource.Width }}
         {{ else }}
-            {{/* assets/ から取得を試みる（先頭の / を除いてパス解決） */}}
-            {{ $assetPath := strings.TrimPrefix "/" .Image }}
-            {{ $resource = resources.Get $assetPath }}
-            {{ if $resource }}
-                {{ $result = dict
-                    "Resource" $resource
-                    "Permalink" $resource.RelPermalink
-                    "Height" $resource.Height
-                    "Width" $resource.Width
-                }}
-            {{ else }}
-                {{/* static/ フォルダの画像はpermalinkとして直接使用 */}}
-                {{ $result = dict
-                    "Resource" nil
-                    "Permalink" .Image
-                    "Height" nil
-                    "Width" nil
-                }}
-            {{ end }}
+            {{/* static/ フォルダの画像は permalink として直接使用 */}}
+            {{ $result = dict "Resource" nil "Permalink" .Image "Height" nil "Width" nil }}
         {{ end }}
     {{ end }}
 {{ end }}
