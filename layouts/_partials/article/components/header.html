@@ -1,6 +1,8 @@
 {{- $IsList := .IsList -}}
 {{- $Page := .Page -}}
 {{- $isLCP := .IsLCP | default false -}}
+{{- $isSingle := not $IsList -}}
+{{- $isPriority := or $isLCP $isSingle -}}
 <header class="article-header{{ if $IsList }} article-header--list{{ end }}">
     {{- $image := partial "helper/image" (dict "Image" $Page.Params.image "Resources" $Page.Resources "Context" $Page) -}}
     {{ if $image }}
@@ -23,6 +25,9 @@
                 {{- end -}}
                 {{- $sizes = "(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" -}}
             {{- end -}}
+            {{/* 単一記事の先頭画像は width/height 属性由来の暗黙 aspect-ratio が予約に効かず
+                 CLS の原因になるため、style で明示的に aspect-ratio を指定して読み込み前に
+                 スペースを予約する（一覧は固定高のため style は空にして付与しない） */}}
             {{ partial "helper/responsive-image" (dict
                 "Resource" $image.Resource
                 "Widths" $widths
@@ -33,8 +38,9 @@
                     "width" $image.Width
                     "height" $image.Height
                     "alt" (printf "Featured image of post %s" $Page.Title)
-                    "loading" (cond $isLCP "eager" "lazy")
-                    "fetchpriority" (cond $isLCP "high" "")
+                    "loading" (cond $isPriority "eager" "lazy")
+                    "fetchpriority" (cond $isPriority "high" "")
+                    "style" (cond $isSingle (printf "aspect-ratio:%v/%v" $image.Width $image.Height) "")
                     "sizes" $sizes
                 )
             ) }}
