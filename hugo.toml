@@ -1,7 +1,7 @@
 baseURL = 'https://example.com/'
 capitalizeListTitles = false
 enableRobotsTXT = true
-languageCode = 'ja'
+locale = 'ja'
 title = 'サイト名'
 theme = 'stack'
 timeZone = 'Asia/Tokyo'
@@ -42,7 +42,10 @@ timeZone = 'Asia/Tokyo'
   homepage = []
   page     = [{ type = "toc" }]
 
-[imaging]
+[imaging.jpeg]
+  quality = 65
+
+[imaging.webp]
   quality = 65
 
 [params.imageProcessing]
