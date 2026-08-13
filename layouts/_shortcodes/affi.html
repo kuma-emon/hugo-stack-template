@@ -2,8 +2,7 @@
 {{- $mapping := index hugo.Data "affi-mapping" -}}
 {{- $entry := index $mapping $id -}}
 {{- if $entry -}}
-{{- $url := $entry.url -}}
-{{- with .Site.Params.amazonTag -}}{{- $url = printf "%s?tag=%s" $url . -}}{{- end -}}
+{{- $url := partial "helper/amazon-tag-url" (dict "url" $entry.url "tag" .Site.Params.amazonTag) -}}
 <a href="{{ $url }}" target="_blank" rel="noopener" class="link affi-link">{{ $entry.text }}</a>
 {{- else -}}
 <!-- affi id={{ $id }} not found -->

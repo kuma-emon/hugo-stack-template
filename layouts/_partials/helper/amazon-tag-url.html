@@ -1,0 +1,16 @@
+{{- /*
+  Amazon の商品 URL に amazonTag を付与して返すヘルパー partial。
+  - 本番ビルド時のみ付与（hugo.IsServer 時は素通し）
+  - amazon.co.jp / amzn.to ドメイン以外は素通し
+  - URL に既存クエリがあれば & で連結、なければ ? で開始
+  - amazonTag が空なら素通し
+
+  使い方：
+    {{ $tagged := partial "helper/amazon-tag-url" (dict "url" $url "tag" .Site.Params.amazonTag) }}
+*/ -}}
+{{- $url := .url -}}
+{{- $tag := .tag -}}
+{{- if and (not hugo.IsServer) $tag (or (in $url "amazon.co.jp") (in $url "amzn.to")) -}}
+    {{- $url = printf "%s%stag=%s" $url (cond (in $url "?") "&" "?") $tag -}}
+{{- end -}}
+{{ return $url }}
