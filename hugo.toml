@@ -4,6 +4,9 @@ enableRobotsTXT = true
 locale = 'ja'
 title = 'サイト名'
 theme = 'stack'
+# 日本語は空白で区切られないため、未設定だと .Summary の語数打ち切りが機能せず
+# 本文全体が要約になる（meta description・RSS の description が肥大化する）
+hasCJKLanguage = true
 timeZone = 'Asia/Tokyo'
 
 # [services.googleAnalytics]
@@ -19,6 +22,9 @@ timeZone = 'Asia/Tokyo'
   noClasses = false
 
 [params]
+  # テーマ既定（themes/stack/config/_default/params.toml）が true のため明示的に上書きする。
+  # true だと RSS の <description> に .Content（全文）が入る
+  rssFullContent = false
   mainSections = ["posts"]
   # favicon = ""
   # adsensePublisherID = "ca-pub-XXXXXXXXXXXXXXXX"
