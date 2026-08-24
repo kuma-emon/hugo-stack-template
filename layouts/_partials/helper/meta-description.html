@@ -1,0 +1,13 @@
+{{- /* meta description / og:description 用の説明文。
+       テーマの data/description.html は replaceRE "\n" " " を plainify より前に実行しており、
+       <br> 由来の改行が plainify 後に復活する。printf "%q" がそれを \n の 2 文字に
+       エスケープするため、ここで plainify 後の空白をまとめて正規化する。
+       ページャ 2 ページ目以降でキャッシュを使わない理由は meta-title.html と同じ。 */ -}}
+{{- $description := "" -}}
+{{- $paginator := partial "helper/paginator.html" . -}}
+{{- if and $paginator $paginator.HasPrev -}}
+    {{- $description = partial "data/description" . -}}
+{{- else -}}
+    {{- $description = partialCached "data/description" . .RelPermalink -}}
+{{- end -}}
+{{- return ($description | replaceRE "\\s+" " " | strings.TrimSpace) -}}

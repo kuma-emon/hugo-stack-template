@@ -1,0 +1,12 @@
+{{- /* canonical URL を返す。ページャ 2 ページ目以降は元ページではなくページャ自身の URL を指す。
+       Hugo のページャは /page/2/ を出力するときも .Permalink が元ページを返すため、
+       .Permalink をそのまま使うと 2 ページ目以降がすべて元ページに集約されてしまう。 */ -}}
+{{- $url := .Permalink -}}
+{{- with .Params.canonicalUrl -}}
+    {{- $url = . -}}
+{{- end -}}
+{{- $paginator := partial "helper/paginator.html" . -}}
+{{- if and $paginator $paginator.HasPrev -}}
+    {{- $url = $paginator.URL | absURL -}}
+{{- end -}}
+{{- return $url -}}

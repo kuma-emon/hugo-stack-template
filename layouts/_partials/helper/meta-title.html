@@ -1,0 +1,11 @@
+{{- /* <title> / og:title 用のタイトル。ページャ 2 ページ目以降はキャッシュを使わない。
+       テーマ既定の partialCached "data/title" . .RelPermalink は、ページャ全ページで
+       .RelPermalink が同一になるため、どのページ番号の結果が配られるか不定になる。 */ -}}
+{{- $title := "" -}}
+{{- $paginator := partial "helper/paginator.html" . -}}
+{{- if and $paginator $paginator.HasPrev -}}
+    {{- $title = partial "data/title" . -}}
+{{- else -}}
+    {{- $title = partialCached "data/title" . .RelPermalink -}}
+{{- end -}}
+{{- return $title -}}

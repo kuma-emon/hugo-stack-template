@@ -1,0 +1,21 @@
+{{- /* テーマ版からの変更点（layouts/ 側の override）:
+       - title / description を helper/meta-title・helper/meta-description 経由にする
+         （ページャ全ページで .RelPermalink が同一になり partialCached が誤答するため）
+       - og:url を helper/canonical にそろえる（テーマ版は .Permalink で、
+         ページャ 2 ページ目以降が canonical と食い違う） */ -}}
+{{- with .Site.Params.opengraph.twitter.site -}}
+    <meta name="twitter:site" content="@{{ . }}">
+    <meta name="twitter:creator" content="@{{ . }}">
+{{- end -}}
+
+{{- $title := partial "helper/meta-title" . -}}
+{{- $description := partial "helper/meta-description" . -}}
+
+<meta name="twitter:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
+<meta name="twitter:description" {{ printf "content=%q" $description | safeHTMLAttr }}>
+
+{{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
+{{- if $image -}}
+    <meta name="twitter:card" content="{{ .Site.Params.opengraph.twitter.card }}">
+    <meta name="twitter:image" content='{{ absURL $image.Permalink }}' />
+{{- end -}}

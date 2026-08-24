@@ -3,20 +3,17 @@
 
 {{ if not hugo.IsServer }}{{ with site.Config.Services.GoogleAnalytics.ID }}<link rel="preconnect" href="https://www.googletagmanager.com">{{ end }}{{ end }}
 
-{{- $description := partialCached "data/description" . .RelPermalink -}}
+{{- $description := partial "helper/meta-description" . -}}
 <meta name='description' {{ printf "content=%q" $description | safeHTMLAttr }}>
 {{ with .Params.Keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
 
-{{- $title := partial "data/title" . -}}
+{{- $title := partial "helper/meta-title" . -}}
 <title>{{ $title }}</title>
 
-{{ with .Params.canonicalUrl }}
-<link rel="canonical" href="{{ . }}">
-{{ else }}
-<link rel="canonical" href="{{ .Permalink }}">
-{{ end }}
+<link rel="canonical" href="{{ partial "helper/canonical" . }}">
 
-{{ if or (eq .Kind "term") (eq .Kind "taxonomy") }}
+{{- $paginator := partial "helper/paginator.html" . -}}
+{{ if or (eq .Kind "term") (eq .Kind "taxonomy") (and $paginator $paginator.HasPrev) }}
 <meta name="robots" content="noindex, follow">
 {{ end }}
 
