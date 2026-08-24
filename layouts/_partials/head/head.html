@@ -4,7 +4,7 @@
 {{ if not hugo.IsServer }}{{ with site.Config.Services.GoogleAnalytics.ID }}<link rel="preconnect" href="https://www.googletagmanager.com">{{ end }}{{ end }}
 
 {{- $description := partial "helper/meta-description" . -}}
-<meta name='description' {{ printf "content=%q" $description | safeHTMLAttr }}>
+<meta name='description' content="{{ $description }}">
 {{ with .Params.Keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
 
 {{- $title := partial "helper/meta-title" . -}}

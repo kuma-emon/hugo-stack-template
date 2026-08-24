@@ -1,0 +1,5 @@
+[list]
+    page = "{{ .Count }} 件"
+
+[pagination]
+    page = "{{ .Count }} ページ目"

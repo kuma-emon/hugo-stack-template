@@ -2,7 +2,10 @@
        - title / description を helper/meta-title・helper/meta-description 経由にする
          （ページャ全ページで .RelPermalink が同一になり partialCached が誤答するため）
        - og:url を helper/canonical にそろえる（テーマ版は .Permalink で、
-         ページャ 2 ページ目以降が canonical と食い違う） */ -}}
+         ページャ 2 ページ目以降が canonical と食い違う）
+       - printf "content=%q" をやめて Hugo の自動エスケープに任せる。
+         %q は Go の文字列リテラル形式なので、タイトルに " があると content="\" で
+         属性が閉じ、og:title がバックスラッシュ 1 文字になる */ -}}
 {{- with .Site.Params.opengraph.twitter.site -}}
     <meta name="twitter:site" content="@{{ . }}">
     <meta name="twitter:creator" content="@{{ . }}">
@@ -11,8 +14,8 @@
 {{- $title := partial "helper/meta-title" . -}}
 {{- $description := partial "helper/meta-description" . -}}
 
-<meta name="twitter:title" {{ printf "content=%q" $title | safeHTMLAttr }}>
-<meta name="twitter:description" {{ printf "content=%q" $description | safeHTMLAttr }}>
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
 
 {{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
 {{- if $image -}}

@@ -1,0 +1,18 @@
+{{- /* テーマ版からの変更点:
+       - "Page %d" のハードコードをやめ i18n の pagination.page を使う。
+         テーマの list.page は list.html の記事件数表示に使われているため流用できない
+       - 語順をページ名 → ページ番号に入れ替える。
+         ブラウザのタブは幅が狭いと先頭しか見えず、ページ番号が先だと判別できない */ -}}
+{{- $pageTitle := .Title -}}
+{{- $siteTitle := .Site.Title -}}
+{{- $paginator := partial "helper/paginator.html" . -}}
+
+{{- $title := slice -}}
+
+{{- $title = $title | append (default $siteTitle $pageTitle) -}}
+
+{{- if and $paginator $paginator.HasPrev -}}
+    {{- $title = $title | append (T "pagination.page" $paginator.PageNumber) -}}
+{{- end -}}
+
+{{ return delimit $title " - " }}
