@@ -6,6 +6,9 @@
  * @link https://github.com/jonsuh/hamburgers
  */
 
+
+@use "../breakpoints" as *;
+
 .hamburger {
     padding-top: var(--spacing-sm);
     display: inline-block;

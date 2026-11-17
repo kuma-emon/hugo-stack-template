@@ -1,6 +1,10 @@
 /*
 *   Global style
 */
+
+@use "sass:meta";
+@use "breakpoints" as *;
+
 :root {
     --main-top-padding: 35px;
 
@@ -151,13 +155,13 @@
 [data-scheme="light"] {
     --pre-text-color: #272822;
     --pre-background-color: #fafafa;
-    @import "partials/highlight/light.scss";
+    @include meta.load-css("partials/highlight/light");
 }
 
 [data-scheme="dark"] {
     --pre-text-color: #f8f8f2;
     --pre-background-color: #272822;
-    @import "partials/highlight/dark.scss";
+    @include meta.load-css("partials/highlight/dark");
 }
 
 :root {

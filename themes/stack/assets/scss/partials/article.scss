@@ -1,4 +1,8 @@
 /* Default article style */
+
+@use "../breakpoints" as *;
+@use "../mixins" as *;
+
 .article-list {
     display: flex;
     flex-direction: column;

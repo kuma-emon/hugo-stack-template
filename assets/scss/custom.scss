@@ -1,3 +1,6 @@
+@use "sass:meta";
+@use "breakpoints" as *;
+
 :root {
     --menu-icon-separation: 8px;
     --heading-border-size: 12px;
@@ -10,10 +13,10 @@
 
 // Chroma シンタックスハイライト配色（VSCode ライト: vs / ダーク: github-dark）
 [data-scheme="light"] {
-    @import "chroma-light";
+    @include meta.load-css("chroma-light");
 }
 [data-scheme="dark"] {
-    @import "chroma-dark";
+    @include meta.load-css("chroma-dark");
 }
 
 // 見出しの左線を親の端から12px内側に、幅12pxで描画

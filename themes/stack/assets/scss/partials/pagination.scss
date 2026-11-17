@@ -1,3 +1,5 @@
+@use "../mixins" as *;
+
 .pagination {
     display: flex;
     @include card-style;

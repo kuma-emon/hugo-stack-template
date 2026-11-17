@@ -3,6 +3,8 @@
 *   https://xyproto.github.io/splash/docs/monokai.html
 */
 
+
+@use "common";
 $color: #f8f8f2;
 $background-color: #272822;
 $error-color: #bb0064;
@@ -11,4 +13,4 @@ $text-color: $color;
 $name-color: #a6e22e;
 $literal-color: #e6db74;
 
-@import "common.scss";
+@include common.highlight($color, $background-color, $error-color, $keyword-color, $text-color, $name-color, $literal-color);
