@@ -76,8 +76,13 @@ GitHub Actions を経由せず、Cloudflare Pages 側でリポジトリを直接
 ダッシュボード Git 連携を使う場合は、`.github/workflows/deploy.yml` を削除した上で以下を設定：
 
 1. **Workers & Pages > Pages > Connect to Git** からこのリポジトリを連携
-2. ビルド設定: フレームワークプリセット = Hugo、ビルドコマンド = `hugo --minify`、ビルド出力ディレクトリ = `public`
-3. 環境変数: `HUGO_VERSION` = `0.169.0`
+2. ビルド設定: フレームワークプリセット = Hugo、ビルド出力ディレクトリ = `public`、ビルドコマンド = 次の 1 行（テーマの SCSS を CSS に変換する Dart Sass を取得してからビルドする。Hugo 0.170.0 以降は Dart Sass が必須）
+
+   ```
+   curl -sfL "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz" | tar -xz -C /tmp && export PATH="/tmp/dart-sass:${PATH}" && hugo --minify
+   ```
+
+3. 環境変数: `HUGO_VERSION` = `0.170.0`、`DART_SASS_VERSION` = `1.108.2`
 
 ### 5. （任意）Google Analytics
 
