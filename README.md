@@ -82,7 +82,7 @@ GitHub Actions を経由せず、Cloudflare Pages 側でリポジトリを直接
    curl -sfL "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz" | tar -xz -C /tmp && export PATH="/tmp/dart-sass:${PATH}" && hugo --minify
    ```
 
-3. 環境変数: `HUGO_VERSION` = `0.170.0`、`DART_SASS_VERSION` = `1.108.2`
+3. 環境変数: `HUGO_VERSION` = `0.170.1`、`DART_SASS_VERSION` = `1.108.2`
 
 ### 5. （任意）Google Analytics
 
